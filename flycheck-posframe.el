@@ -5,7 +5,7 @@
 ;; Author: Alex Murray <murray.alex@gmail.com>
 ;; Maintainer: Alex Murray <murray.alex@gmail.com>
 ;; URL: https://github.com/alexmurray/flycheck-posframe
-;; Version: 0.9
+;; Version: 0.10
 ;; Package-Requires: ((flycheck "0.24") (emacs "26") (posframe "0.7.0"))
 
 ;; This file is not part of GNU Emacs.
@@ -97,6 +97,24 @@
   :group 'flycheck-posframe
   :type 'string
   :package-version '(flycheck-posframe . "0.1"))
+
+(defcustom flycheck-posframe-max-width nil
+  "Maximum width of the posframe."
+  :group 'flycheck-posframe
+  :type 'integer
+  :package-version '(flycheck-posframe . "0.10"))
+
+(defcustom flycheck-posframe-max-height nil
+  "Maximum height of the posframe."
+  :group 'flycheck-posframe
+  :type 'integer
+  :package-version '(flycheck-posframe . "0.10"))
+
+(defcustom flycheck-posframe-lines-truncate nil
+  "If non-nil, truncate lines in the posframe."
+  :group 'flycheck-posframe
+  :type 'boolean
+  :package-version '(flycheck-posframe . "0.10"))
 
 (defface flycheck-posframe-face
   '((t :inherit default))
@@ -216,6 +234,9 @@ Only the `foreground' is used in this face."
        :internal-border-color (face-foreground (if flycheck-posframe-border-use-error-face
 						   (flycheck-posframe-highest-error-level-face errors)
 						 'flycheck-posframe-border-face) nil t)
+       :max-height (or flycheck-posframe-max-height (window-height))
+       :max-width (or flycheck-posframe-max-width (window-width))
+       :lines-truncate flycheck-posframe-lines-truncate
        :poshandler poshandler
        :hidehandler #'flycheck-posframe-hidehandler))))
 
